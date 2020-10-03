@@ -1,15 +1,53 @@
 package pl.coderslab.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.fasterxml.jackson.databind.util.BeanUtil;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 import pl.coderslab.model.Book;
+import pl.coderslab.model.BookService;
+import pl.coderslab.model.MemoryBookService;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/books")
 public class BookController {
-    @RequestMapping("/hellobook")
-    public Book helloBook(){
-        return new Book(1L, "9788324631766", "Thinking in Java",
-                "Bruce Eckel", "Helion", "programming");
+    private BookService mbs;
+
+    @Autowired
+    public BookController(BookService mbs){
+        this.mbs= mbs;
     }
+
+    @GetMapping("")
+    public List<Book> getAllBooks(){
+        return mbs.getAllBooks();
+    }
+
+    @GetMapping("/{id}")
+    public Book getBook(@PathVariable long id){
+        return mbs.getBook(id).get();
+    }
+
+    @PostMapping("")
+    public List<Book> addBook(@RequestBody Book book){
+        this.mbs.addBook(book);
+        return mbs.getAllBooks();
+    }
+
+    @PutMapping("")
+    public List<Book> editBook(@RequestBody Book book){
+        this.mbs.editBook(book);
+        return mbs.getAllBooks();
+    }
+
+    @DeleteMapping("/{id}")
+    public List<Book> deleteBook(@PathVariable long id){
+        mbs.deleteBook(id);
+        return mbs.getAllBooks();
+    }
+
 }
