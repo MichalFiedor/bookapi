@@ -21,7 +21,6 @@ public class MemoryBookService implements BookService {
         this.id = books.size();
     }
 
-
     public List<Book> getAllBooks() {
         return books;
     }
@@ -41,7 +40,6 @@ public class MemoryBookService implements BookService {
             books.set(books.indexOf(getBook(id).get()), book);
         }
     }
-
 
     public void deleteBook(long id) {
         if (this.getBook(id).isPresent()) {

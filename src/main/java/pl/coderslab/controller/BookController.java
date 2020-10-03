@@ -1,16 +1,11 @@
 package pl.coderslab.controller;
 
-import com.fasterxml.jackson.databind.util.BeanUtil;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.model.Book;
 import pl.coderslab.model.BookService;
-import pl.coderslab.model.MemoryBookService;
-
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/books")
