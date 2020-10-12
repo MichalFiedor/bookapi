@@ -1,19 +1,21 @@
 package pl.coderslab.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import pl.coderslab.model.Book;
-import pl.coderslab.model.BookService;
+import pl.coderslab.model.Service;
 import java.util.List;
 
 
 @RestController
 @RequestMapping("/books")
 public class BookController {
-    private BookService mbs;
+    private Service mbs;
 
     @Autowired
-    public BookController(BookService mbs){
+    public BookController(Service mbs){
         this.mbs= mbs;
     }
 
@@ -24,7 +26,11 @@ public class BookController {
 
     @GetMapping("/{id}")
     public Book getBook(@PathVariable long id){
-        return mbs.getBook(id).get();
+        return mbs.getBook(id).orElseThrow(()->{
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "entity not found"
+            );
+        });
     }
 
     @PostMapping("")

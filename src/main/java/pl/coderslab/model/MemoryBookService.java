@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-public class MemoryBookService implements BookService {
+public class MemoryBookService implements Service {
     private List<Book> books;
     long id;
 
